@@ -33,6 +33,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "pretty-data": "^0.40.0",
     "request": "^2.88.2",
     "url-parse": "^1.4.7",
