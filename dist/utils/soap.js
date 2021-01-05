@@ -4,7 +4,7 @@ const Crypto = require('crypto');
 
 const Save = require('./save-xml');
 
-const Request = require('request');
+const axios = require('axios');
 
 const Config = require('./config');
 
@@ -170,32 +170,18 @@ class Soap {
         const xml = Fs.readFileSync(filePath, 'utf8');
         resolve(xml);
       } else {
-        const options = {
-          method: 'POST',
-          uri: serviceAddress.href,
-          encoding: 'utf8',
+        axios({
+          method: 'post',
+          url: serviceAddress.href,
           headers: {
             'Content-Type': 'application/soap+xml; charset=utf-8;',
-            'Content-Length': Buffer.byteLength(soapEnvelope)
+            'Content-Length': Buffer.byteLength(soapEnvelope, 'utf8')
           },
-          body: soapEnvelope,
-          auth: {
-            user: this.username,
-            pass: this.password,
-            sendImmediately: false
-          }
-        };
-        Request(options, (error, response, body) => {
-          if (error) {
-            console.error(error);
-            reject(error);
-          } else {
-            if (response.statusCode === 200) {
-              resolve(body);
-            } else {
-              reject(response);
-            }
-          }
+          data: soapEnvelope
+        }).then(response => {
+          resolve(response.data);
+        }).catch(e => {
+          reject(e);
         });
       }
     });
