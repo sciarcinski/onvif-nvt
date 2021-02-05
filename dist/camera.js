@@ -314,11 +314,11 @@ class Camera {
 
             if (this.events) {
               if ('WSPullPointSupport' in events && events.WSPullPointSupport === 'true') {
-                this.analytics.wsPullPointSupport = true;
+                this.events.wsPullPointSupport = true;
               }
 
               if ('WSSubscriptionPolicySupport' in events && events.WSSubscriptionPolicySupport === 'true') {
-                this.analytics.wsSubscriptionPolicySupport = true;
+                this.events.wsSubscriptionPolicySupport = true;
               }
             }
           }
