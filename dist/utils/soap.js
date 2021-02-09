@@ -8,6 +8,8 @@ const axios = require('axios');
 
 const Config = require('./config');
 
+const Manager = require('../onvif-nvt');
+
 class Soap {
   constructor() {
     this.username = '';
@@ -171,6 +173,7 @@ class Soap {
         resolve(xml);
       } else {
         axios({
+          timeout: Manager.timeout,
           method: 'post',
           url: serviceAddress.href,
           headers: {
